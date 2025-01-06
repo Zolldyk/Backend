@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="controls">
+    <div class="sort-controls">
+      <select id="sortBy" onchange="sortBooks(this.value)">
+        <option value="date">Date Read</option>
+        <option value="rating">Rating</option>
+        <option value="title">Title</option>
+      </select>
+    </div>
+    <div class="filter-controls">
+      <input type="text" id="searchInput" placeholder="Search books..." onkeyup="filterBooks()">
+    </div>
+  </div>
+
+  <div class="book-grid">
+    <% books.forEach(book => { %>
+      <div class="book-card" data-rating="<%= book.rating %>" data-date="<%= book.date_finished %>">
+        <img src="/books/cover/<%= book.isbn %>" alt="<%= book.title %>" class="book-cover">
+        <div class="book-info">
+          <h3><%= book.title %></h3>
+          <p class="author"><%= book.author %></p>
+          <div class="rating">
+            <% for(let i = 0; i < book.rating; i++) { %>★<% } %>
+            <% for(let i = book.rating; i < 5; i++) { %>☆<% } %>
+          </div>
+          <p class="date">Read: <%= new Date(book.date_finished).toLocaleDateString() %></p>
+          <a href="/books/<%= book.id %>" class="view-notes">View Notes</a>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</div>
